@@ -3,11 +3,17 @@
 
 
 %boat cross section
-x = -10:10;
-y = abs(x).^4-1;
+x = linspace(-5,5,100);
+y = abs(x).^2-1;
 
 %waterline
-y = 4
+x1 = linspace(-5,5,100);
+y1 = 4*(x-(x-1))-1;
 
 hold on;
-plot(x,y)
+
+plot(x,y);
+plot(x1,y1);
+
+axis([-5, 5, -3, 5]);
+
