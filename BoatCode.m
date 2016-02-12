@@ -1,6 +1,16 @@
 %MatLab Code for Boat Project
 
 
+%Boat Visualization
+%Determination of COM
+%Waterline Location
+%Determination of Boat Displacement
+%Determination of COB
+%Determine Righting Arm
+%Plot of RA vs. Angle
+
+%Boat Design Input, global, localhull?
+
 
 %boat cross section
 x = linspace(-5,5,100);
