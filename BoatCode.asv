@@ -17,8 +17,8 @@ function res = BoatCode(nfunction, heelangle)
 n = nfunction;
 theta = heelangle;
 hold on;
-boatvisual(5,.5, theta);
-res = rightingarm([0,0],[.6,-.2],theta);
+boatvisual(5,.5, 15);
+rightingarm([0,0],[.6,-.2],15)
 
 
 
