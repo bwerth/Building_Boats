@@ -1,13 +1,13 @@
 function y = waterline(mass,theta,n)
 y = 0;
-fun = @(z,y) z./z;
-zmin = @(z)abs(y)^2-1;
+fun = @(y,z) z./z;
+zmin = @(y)abs(y).^n-1;
 totalarea = integral2(fun,-1,1,zmin,0);
-for d = linspace(0,10,100)
-    ymax = nthroot(-d+1,n);
+for d = linspace(0,10,1000)
+    ymax = nthroot(d,n);
     ymin = -ymax;
-    subarea = integral2(fun,zmin,-d,ymin,ymax);
-    if subarea == .5*totalarea
+    subarea = integral2(fun,ymin,ymax,zmin,-d);
+    if abs(subarea-.5*totalarea) <= .01
         y = d;
     end
 end
