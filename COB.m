@@ -1,0 +1,15 @@
+function COB = COB(n,d,theta)
+p = 1000; %kg/m^3
+fun = @(y,z) p*(z./z);
+funy = @(y,z) p*y.*(z./z);
+funz = @(y,z) p*z.*(z./z);
+ymax = nthroot(d,n);
+ymin = -ymax;
+zmin = @(y)abs(y).^n-1;
+zmax = @(y)-d+tan(theta)*y;
+totalarea = integral2(fun,ymin,ymax,zmin,zmax);
+My = integral2(funy,ymin,ymax,zmin,zmax);
+Mz = integral2(funz,ymin,ymax,zmin,zmax);
+COB = 1:2;
+COB(1) = My./totalarea;
+COB(2) = Mz./totalarea;
