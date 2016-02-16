@@ -1,4 +1,4 @@
-function y = waterline(mass,theta,n)
+function y = waterline(theta,n)
 y = 0;
 fun = @(y,z) z./z;
 zmin = @(y)abs(y).^n-1;

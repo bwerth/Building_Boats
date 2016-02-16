@@ -17,7 +17,7 @@ function res = BoatCode(nfunction, heelangle)
 n = nfunction;
 theta = heelangle;
 hold on;
-boatvisual(5,.5, theta);
+boatvisual(n,-.5, theta);
 res = rightingarm([0,0],[.6,-.2],theta);
 
 
@@ -26,7 +26,7 @@ res = rightingarm([0,0],[.6,-.2],theta);
 %boat cross section
 function res = boatvisual(n,d,theta)
 y = @(x) 1/n*abs(x).^n-1;
-ydeck = @(x) 2;
+ydeck = @(x) 0;
 
 boatdeck = @(x) y(x)-ydeck(x);
 negboatdeck = fzero(boatdeck,-5);
@@ -48,7 +48,7 @@ fplot(ydeck, [negboatdeck,posboatdeck], 'b');
 plot(x1,y1);
 plot(COM(1), COM(2),'r*');
 plot(COB(1), COB(2),'g*');
-axis([-5, 5, -3, 5]);
+axis([-3, 3, -3, 3]);
 end
 
 
