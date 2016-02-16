@@ -7,13 +7,24 @@
 function res = AVSPlot()
     n = 5;
     hold on;
-    for theta = 0:.5:180
-        rightingarm = BoatCode(n, theta);
-        plot(theta, rightingarm, 'r*');
+    for theta = 0:1:30
+        COMpt = COM(n);
+        water = waterline(theta, n);
+        COBpt = COB(n,water,theta);
+        %BoatCode(n,theta, COMpt, water, COBpt);
+        RA = rightingarm(COMpt, COBpt, theta);
+        plot(theta, RA, 'r*');
     end
         
     
     
     
 end    
+
+
+
+%Things to do:
+%fix waterline
+%Add 90 degrees over part
+%Add weights/3D
     

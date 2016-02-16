@@ -11,34 +11,37 @@
 
 %Boat Design Input, global, localhull?
 
-function res = BoatCode(nfunction, heelangle)
+function res = BoatCode(nfunction, heelangle, COMpt,d, COBpt)
 
 
 n = nfunction;
 theta = heelangle;
+waterline = d;
+COMthing = COMpt;
+COBthing = COBpt;
 hold on;
-boatvisual(n,-.5, theta);
-res = rightingarm([0,0],[.6,-.2],theta);
+boatvisual(n,waterline, theta, COMthing, COBthing);
+
 
 
 
 
 %boat cross section
-function res = boatvisual(n,d,theta)
-y = @(x) 1/n*abs(x).^n-1;
-ydeck = @(x) 0;
+function res = boatvisual(n,d,theta, COMpt, COBpt)
+y = @(x) (1/n^n)*abs(x).^n;
+ydeck = @(x) 17;
 
 boatdeck = @(x) y(x)-ydeck(x);
 negboatdeck = fzero(boatdeck,-5);
 posboatdeck = fzero(boatdeck,5);
 
 %waterline 
-x1 = linspace(-5,5,100);
-y1 = tand(theta)*x1+d;
+x1 = linspace(-20,20,100);
+y1 = tand(theta)*x1+17-d;
 
 %COM, COB
-COM = [0,0];
-COB = [.6,-.2];
+COM = COMpt;
+COB = COBpt;
 
 hold on;
 
@@ -48,60 +51,12 @@ fplot(ydeck, [negboatdeck,posboatdeck], 'b');
 plot(x1,y1);
 plot(COM(1), COM(2),'r*');
 plot(COB(1), COB(2),'g*');
-axis([-3, 3, -3, 3]);
+axis([-20, 20, -5, 20]);
 end
 
 
 
 
-
-%calculates the rightingarm 
-function res = rightingarm(COM, COB, angle)
-    
-    %Checking angles
-    if angle == 0 || angle == 180
-        res = 0;
-        
-    
-    %90 degrees doesn't work with tan, so we have to modify it a bit    
-    elseif angle == 90
-        angle2 = angle-.01;
-         %Creating lines perpendicular to each other at COM and COB, solving for
-        %constant
-        COMline = @(x) tand(angle2)*COM(1)+x-COM(2);
-        COBline = @(x) -1/tand(angle2)*COB(1)+x-COB(2);
-        b = fzero(COMline,0);
-        c = fzero(COBline,0);
-
-
-        %Solving for intersection
-        Intersect = @(x) tand(angle2) * x + b + 1/tand(angle2) * x - c;
-        xIntersect = fzero(Intersect, 0);
-
-        %Calculating Distance  = rightingarm
-        res = sqrt((xIntersect-COM(1))^2 + ((tand(angle2)*xIntersect+b) - COM(2))^2);
-    
-
-    else
-        %Creating lines perpendicular to each other at COM and COB, solving for
-        %constant
-        COMline = @(x) tand(angle)*COM(1)+x-COM(2);
-        COBline = @(x) -1/tand(angle)*COB(1)+x-COB(2);
-        b = fzero(COMline,0);
-        c = fzero(COBline,0);
-
-
-        %Solving for intersection
-        Intersect = @(x) tand(angle) * x + b + 1/tand(angle) * x - c;
-        xIntersect = fzero(Intersect, 0);
-
-        %Calculating Distance  = rightingarm
-        res = sqrt((xIntersect-COM(1))^2 + ((tand(angle)*xIntersect+b) - COM(2))^2);
-    end 
-    
-
-
-end
 
 
 

@@ -1,12 +1,23 @@
 function COM = COM(n)
-p = 31.7; %kg/m^3
+p = .0317; %g/cm^3
+
 fun = @(y,z) p*(z./z);
 funy = @(y,z) p*y.*(z./z);
 funz = @(y,z) p*z.*(z./z);
-zmin = @(y)abs(y).^n-1;
-totalarea = integral2(fun,-1,1,zmin,0);
-My = integral2(funy,-1,1,zmin,0);
-Mz = integral2(funz,-1,1,zmin,0);
+
+
+zmin = @(y) (1/(n^n)) * abs(y).^n;
+deck = @(y) 17;
+boatdeck = @(y) zmin(y)-deck(y);
+negboatdeck = fzero(boatdeck,-5);
+posboatdeck = fzero(boatdeck,5);
+totalarea = integral2(fun,negboatdeck,posboatdeck,zmin,17);
+
+
+My = integral2(funy,negboatdeck,posboatdeck,zmin,17);
+Mz = integral2(funz,negboatdeck,posboatdeck,zmin,17);
+
+
 COM = 1:2;
 COM(1) = My./totalarea;
 COM(2) = Mz./totalarea;
