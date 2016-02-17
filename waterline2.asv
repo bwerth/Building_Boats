@@ -2,6 +2,12 @@ function y = waterline2(theta,n)
 
 y = fzero(@submerged,10);
 
+% for i = 0:.5:16.9 
+%     hold on ;
+%     diff = submerged(i);
+%     plot(i, diff, 'x')
+% end  
+
 
 %y = submerged(10);
 function res=submerged(d)
@@ -25,8 +31,8 @@ function res=submerged(d)
     
     watersurface =@(y) (17 - d) + tand(theta)*y;
     watertop = @(y) boathull(y) - watersurface(y);
-    negwater = fzero(watertop, -20);
-    poswater = fzero(watertop, 20);
+    negwater = fzero(watertop, -30);
+    poswater = fzero(watertop, 30);
     
     %Calculates weight of boat
     totalweight = length*integral2(funboat,negboatdeck,posboatdeck,boathull,deck)+1120;
@@ -42,6 +48,10 @@ function res=submerged(d)
         %calculates the intersection of the deck with the water
         deckwater = @(y) watersurface(y) - deck(y);
         deckhitwater = fzero(deckwater, 5);
+        
+        %plot for visual
+        
+
         
         %checking for two cases when below 90
         

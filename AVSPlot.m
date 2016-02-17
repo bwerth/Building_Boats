@@ -7,15 +7,18 @@
 function res = AVSPlot()
     n = 5;
     hold on;
-    for theta = 0:1:30
+    for theta = 0:.1:180
+        if theta == 90 || theta == 180
+            continue
+        end
         COMpt = COM(n);
         water = waterline2(theta, n);
-        COBpt = COB(n,water,theta);
+        COBpt = COB(theta,n,water);
         %BoatCode(n,theta, COMpt, water, COBpt);
         RA = rightingarm(COMpt, COBpt, theta);
         plot(theta, RA, 'r*');
     end
-        
+    
     
     
     
