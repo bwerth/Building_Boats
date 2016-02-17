@@ -24,7 +24,6 @@ end
 
 
 %Things to do:
-%fix waterline
 %Add 90 degrees over part
 %Add weights/3D
     

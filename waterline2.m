@@ -1,9 +1,14 @@
 function y = waterline2(theta,n)
 
 
-y = fzero(@submerged,1);
+y = fzero(@submerged,5);
 
-
+% for i = 0:1:16.9 
+%     hold on ;
+%     diff = submerged(i);
+%     plot(i, diff, 'x')
+% end  
+% 
 function res=submerged(d)
     y=0;
     funboat = @(y,z).0317*z./z;
@@ -28,24 +33,34 @@ function res=submerged(d)
     negwater = fzero(watertop, -5);
     poswater = fzero(watertop, 5);
     
-    
-    %calculates the intersection of the deck with the water
-    
-    deckwater = @(y) watersurface(y) - deck(y);
-    deckhitwater = fzero(deckwater, 5);
-    
-    
-    
+    %Calculates weight of boat
     totalweight = length*integral2(funboat,negboatdeck,posboatdeck,boathull,17)+1120;
 
-
-    %if poswater < deckhitwater
-
-        subarea = length*integral2(funwater,negwater,poswater,boathull,watersurface);
-        res = totalweight-subarea;
     
-    %else
-     %   res = 0;
-    %end
+    
+    if theta == 0
+        subarea = length*integral2(funwater,negwater,poswater,boathull,watersurface);
+    else
+        
+    
+        %calculates the intersection of the deck with the water
+
+        deckwater = @(y) watersurface(y) - deck(y);
+        deckhitwater = fzero(deckwater, 5);
+        
+        
+        
+        if deckhitwater < poswater
+            subarea = length * (integral2(funwater,negwater, deckhitwater, boathull, watersurface) + integral2(funwater, deckhitwater, posboatdeck, boathull, 17));
+        else    
+            subarea = length*integral2(funwater,negwater,poswater,boathull,watersurface);
+        end    
+       
+    end   
+    
+    res = totalweight-subarea;
+    %res = subarea;
+    
+
 end
 end
