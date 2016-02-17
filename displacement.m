@@ -14,7 +14,7 @@ poswater = fzero(watertop, 5);
 deckwater = @(y) watersurface(y) - deck(y);
 deckhitwater = fzero(deckwater, 5);
 if theta == 0
-        res = length*integral2(funwater,negwater,poswater,boathull,watersurface);
+    res = length*integral2(funwater,negwater,poswater,boathull,watersurface);
 elseif theta < 90
         %checking for two cases when below 90
     if deckhitwater < poswater
