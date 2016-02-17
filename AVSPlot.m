@@ -7,7 +7,7 @@
 function res = AVSPlot()
     n = 5;
     hold on;
-    for theta = 0:.1:180
+    for theta = 0:.1:89
         if theta == 90 || theta == 180
             continue
         end
