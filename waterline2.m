@@ -1,6 +1,14 @@
 function y = waterline2(theta,n)
 
-y = fzero(@submerged,10);
+if theta <= 80
+    y = fzero(@submerged,12);
+elseif theta > 80 && theta <=100
+    y = fzero(@submerged, 15);
+elseif theta >100 && theta < 110
+    y = fzero(@submerged, 12);
+elseif theta >= 110
+    y = fzero(@submerged, -5);    
+end    
 
 
 %y = submerged(10);
@@ -25,9 +33,21 @@ function res=submerged(d)
     
     watersurface =@(y) (17 - d) + tand(theta)*y;
     watertop = @(y) boathull(y) - watersurface(y);
-    negwater = fzero(watertop, -20);
-    poswater = fzero(watertop, 20);
     
+    if theta <= 80
+        negwater = fzero(watertop, -20);
+        poswater = fzero(watertop, 20);
+    elseif theta > 80 && theta <= 100
+        negwater = fzero(watertop, -25);
+        poswater = fzero(watertop, 25);
+    elseif theta > 100 && theta < 110
+        negwater = fzero(watertop, -10);
+        poswater = fzero(watertop, 10);
+    elseif theta >= 110
+        negwater = fzero(watertop, -20);
+        poswater = fzero(watertop, 20);            
+        
+    end    
     %Calculates weight of boat
     totalweight = length*integral2(funboat,negboatdeck,posboatdeck,boathull,deck)+1120;
 

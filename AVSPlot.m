@@ -7,7 +7,7 @@
 function res = AVSPlot()
     n = 5;
     hold on;
-    for theta = 0:.1:89
+    for theta = 0:1:180
         if theta == 90 || theta == 180
             continue
         end
@@ -27,6 +27,6 @@ end
 
 
 %Things to do:
-%Add 90 degrees over part
+%Fix Waterline
 %Add weights/3D
     
