@@ -9,7 +9,7 @@ function res = AVSPlot()
     hold on;
     for theta = 0:1:30
         COMpt = COM(n);
-        water = waterline(theta, n);
+        water = waterline2(theta, n);
         COBpt = COB(n,water,theta);
         %BoatCode(n,theta, COMpt, water, COBpt);
         RA = rightingarm(COMpt, COBpt, theta);
