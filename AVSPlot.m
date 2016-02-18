@@ -8,22 +8,26 @@ function res = AVSPlot()
     n = 5;
     hold on;
     iguessd = 10;
-%     iguessnegwater = -5;
-%     iguessposwater = 5;
-    for k = 1:1:10
-%         if theta == 90 || theta == 180
-%             continue
-%         end
-        subplot(4,3,k);
-        theta = k*17 + 5;
+    iguessnegwater = -5;
+    iguessposwater = 5;
+    for theta = 0:1:9
+        if theta == 90 || theta == 180
+            continue
+        end
+%         subplot(4,3,k);
+%         theta = k*17 + 5;
         COMpt = COM(n);
-        water = waterline2(theta, n, iguessd); 
-        iguessd = water;
-        COBpt = COB(theta,n,water);
+        water = waterline2(theta, n, iguessd, iguessnegwater, iguessposwater);
+        COBpt = COB(theta, n, water(1), iguessnegwater, iguessposwater);
+        iguessd = water(1);
+        iguessnegwater = water(2);
+        iguessposwater = water(3);
+        %keyboard;
+        
         %BoatCode(n,theta, COMpt, water, COBpt);
         RA = rightingarm(COMpt, COBpt, theta);
-        myfunction(theta, n, water, COMpt, COBpt);
-        %plot(theta, RA, 'r*');
+        %myfunction(theta, n, water, COMpt, COBpt);
+        plot(theta, RA, 'r*');
     end 
     
     axis([0 180 -10 10]);

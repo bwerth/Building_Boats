@@ -1,4 +1,4 @@
-function COB = COB(theta, n, d)
+function COB = COB(theta, n, d, negwaterestimate, poswaterestimate)
 p = 1; %g/cm^3
 length = 35;
 
@@ -16,10 +16,11 @@ negboatdeck = fzero(boatdeck,-5);
 posboatdeck = fzero(boatdeck,5);
 
 %Water equations
-watersurface = @(y) 17-d+tand(theta)*y;
+watersurface = @(y) 17-d + tand(theta)*y;
 watertop = @(y) boathull(y) - watersurface(y);
-negwater = fzero(watertop, -20);
-poswater = fzero(watertop, 20);
+negwater = fzero(watertop, negwaterestimate);
+poswater = fzero(watertop, poswaterestimate);
+
 
 
 %Conditionals based on angle
