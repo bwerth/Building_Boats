@@ -7,19 +7,26 @@
 function res = AVSPlot()
     n = 5;
     hold on;
-    for theta = 0:1:180
-        if theta == 90 || theta == 180
-            continue
-        end
+    iguessd = 10;
+%     iguessnegwater = -5;
+%     iguessposwater = 5;
+    for k = 1:1:10
+%         if theta == 90 || theta == 180
+%             continue
+%         end
+        subplot(4,3,k);
+        theta = k*17 + 5;
         COMpt = COM(n);
-        water = waterline2(theta, n);
+        water = waterline2(theta, n, iguessd); 
+        iguessd = water;
         COBpt = COB(theta,n,water);
         %BoatCode(n,theta, COMpt, water, COBpt);
         RA = rightingarm(COMpt, COBpt, theta);
-        plot(theta, RA, 'r*');
-    end
+        myfunction(theta, n, water, COMpt, COBpt);
+        %plot(theta, RA, 'r*');
+    end 
     
-    
+    axis([0 180 -10 10]);
     
     
 end    

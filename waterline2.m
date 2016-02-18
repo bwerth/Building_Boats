@@ -1,14 +1,14 @@
-function y = waterline2(theta,n)
+function y = waterline2(theta,n, estimate)
 
-if theta <= 80
-    y = fzero(@submerged,12);
-elseif theta > 80 && theta <=100
-    y = fzero(@submerged, 15);
-elseif theta >100 && theta < 110
-    y = fzero(@submerged, 12);
-elseif theta >= 110
-    y = fzero(@submerged, -5);    
-end    
+% if theta <= 80
+%     y = fzero(@submerged,12);
+% elseif theta > 80 && theta <=100
+%     y = fzero(@submerged, 15);
+% elseif theta >100 && theta < 110
+%     y = fzero(@submerged, 12);
+% elseif theta >= 110
+    y = fzero(@submerged, estimate);    
+% end    
 
 
 %y = submerged(10);
@@ -21,7 +21,7 @@ function res=submerged(d)
     
     %calculates the two corners of the boat
 
-    boathull = @(y)1/(n^n)* abs(y).^n;
+    boathull = @(y) 1/(n^n)* abs(y).^n;
     deck = @(y) 17 *y./y;
     length=35;
     boatdeck = @(y) boathull(y)-deck(y);

@@ -37,8 +37,9 @@ function res = myfunction(theta, n, d , COM, COB)
          plot(deckhitwater, 17, 'ko')
          plot(COM(1), COM(2), 'c*');
          plot([negwater, poswater], [boathull(negwater), boathull(poswater)],'m');
-         plot(COB(1), COB(2),'g*');
-         axis([-20 20 -10 100]);
+         plot(COB(1), COB(2),'k*');
+         axis([-20 20 -10 30]);
+         %axis image
          
          
      end
