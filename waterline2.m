@@ -11,16 +11,16 @@ function y = waterline2(theta,n, estimate, negwaterestimate, poswaterestimate)
 % end    
 
 
-y = submerged(10);
+%y = submerged(10);
 
 
 
     
     
-% y = 1:3;
-% y(1) = fzero(@submerged, estimate); 
-% y(2) = negwater;
-% y(3) = poswater;
+y = 1:3;
+y(1) = fzero(@submerged, estimate); 
+y(2) = negwater;
+y(3) = poswater;
 
 function res = submerged(d)
     y=0;
@@ -31,7 +31,7 @@ function res = submerged(d)
     
     %calculates the two corners of the boat
 
-    boathull = @(y) 1/(n^n)* abs(y).^n;
+    boathull = @(y) abs(y).^n;
     deck = @(y) 17 *y./y;
     length=35;
     boatdeck = @(y) boathull(y)-deck(y);
@@ -54,7 +54,7 @@ function res = submerged(d)
     poswater = fzero(watertop, poswaterestimate);
 
 
-        
+    submass = 0;    
     
     if theta == 0
         submass = length*integral2(funwater,negwater,poswater,boathull,watersurface);
@@ -68,10 +68,10 @@ function res = submerged(d)
         %checking for two cases when below 90
         
         if deckhitwater < poswater
-             submass = length * (integral2(funwater,negwater, deckhitwater, boathull, watersurface) + integral2(funwater, deckhitwater, posboatdeck, boathull, deck));
+             submass = length * (integral2(funwater,negwater, deckhitwater, boathull, watersurface, 'method','iterated') + integral2(funwater, deckhitwater, posboatdeck, boathull, deck, 'method','iterated'));
             %subarea = 50;
         else    
-            submass = length * integral2(funwater,negwater,poswater,boathull,watersurface);
+            submass = length * integral2(funwater,negwater,poswater,boathull,watersurface, 'method','iterated');
             %subarea = 10;
         end
         
@@ -87,19 +87,22 @@ function res = submerged(d)
         %checking for two cases when over 90    
   
         
-        if deckhitwater > negwater
-            %submass = length*(integral2(funwater,deckhitwater,poswater,watersurface,deck) + integral2(funwater,poswater,posboatdeck,boathull,deck));
-            submass = 1;
-        else
-            %submass = length*(integral2(funwater,negboatdeck,negwater,boathull,deck) + integral2(funwater,negwater,poswater,watersurface,deck)+ integral2(funwater,poswater,posboatdeck,boathull,deck));
-            submass = -1;
+        if deckhitwater > negwater && deckhitwater < poswater
+            submass = length*(integral2(funwater,deckhitwater,poswater,watersurface,deck) + integral2(funwater,poswater,posboatdeck,boathull,deck));
+            %submass = 1;
+          
+        elseif deckhitwater < negwater
+            submass = length*(integral2(funwater,negboatdeck,negwater,boathull,deck, 'method','iterated') + integral2(funwater,negwater,poswater,watersurface,deck, 'method','iterated')+ integral2(funwater,poswater,posboatdeck,boathull,deck, 'method','iterated'));
+            %submass = -1;
+
+            
         end
         
        
      end   
     %keyboard;
-    %res = totalweight-submass;
-    res = submass;
+    res = totalweight-submass;
+    %res = submass;
     
 
 end

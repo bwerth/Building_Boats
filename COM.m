@@ -7,8 +7,8 @@ funy = @(y,z) p*y.*(z./z);
 funz = @(y,z) p*z.*(z./z);
 
 
-zmin = @(y)1/(n^n)* abs(y).^n;
-deck = @(y) 17;
+zmin = @(y) abs(y).^n;
+deck = @(y) 17*y./y;
 boatdeck = @(y) zmin(y)-deck(y);
 negboatdeck = fzero(boatdeck,-5);
 posboatdeck = fzero(boatdeck,5);
