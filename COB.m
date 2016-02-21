@@ -33,7 +33,7 @@ watersurface = @(y) height-d + tand(theta)*y;
 %     negwater = min(roots_p);
 %     poswater = max(roots_p);
     
-[negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
+[negboatdeck,posboatdeck,negwater,poswater,~] = myfunction(theta,n,d,[0 0],[0 0]);
 
 
 %Conditionals based on angle

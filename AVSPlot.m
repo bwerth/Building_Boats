@@ -9,7 +9,7 @@ function res = AVSPlot()
     hold on;
     iguessd = 3;
     
-    for theta = 1:1:89
+    for theta = 1:2:89
 %         subplot(4,3,k);
 %         theta = k*17 + 5;
         COMpt = COM(n);
@@ -25,7 +25,7 @@ function res = AVSPlot()
     end 
     iguessd = -100;
 
-    for theta = 91:1:179
+    for theta = 91:2:140
 %         subplot(4,3,k);
 %         theta = k*17 + 5;
         COMpt = COM(n);

@@ -2,25 +2,16 @@ function y = waterline2(theta,n, estimate)
 height = 17;
 
 %y = submerged(10);
-
-
-
-
-    
-    
 y = 1:3;
 y(1) = fzero(@submerged,estimate); 
 y(2) = negwater;
 y(3) = poswater;
 
-
-
 function res = submerged(d)
     y=0;
+    d
 %     funboat = @(y,z) .0317*z./z; %g/cm^3
 %     funwater = @(y,z) 1.0*z./z;
-    
-    
     
     %calculates the two corners of the boat
 
@@ -50,7 +41,7 @@ function res = submerged(d)
 %     negwater = min(roots_p);
 %     poswater = max(roots_p);
     
-    [negboatdeck,posboatdeck,negwater,poswater,~] = myfunction(theta,n,d,[0 0],[0 0]);
+    [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
     
     global totalweight
     %Calculates weight of boat

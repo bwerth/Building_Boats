@@ -48,7 +48,6 @@ function res = rightingarm(COM, COB, angle)
          watervector = zeros(1,2);
          %angle
          watervector(1) = cosd(angle);
-         
          watervector(2) = sind(angle);
          vectorx = COB(1) - COM(1);
          vectory = COB(2) - COM(2);
