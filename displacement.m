@@ -4,7 +4,8 @@ height = 17;
 
 deck = @(y)17*y./y;
 watersurface = @(y) (17-d) + tand(theta)*y;
-boathull = @(y)1/(n^n)* abs(y).^n;
+% boathull = @(y)1/(n^n)* abs(y).^n;
+boathull = @(y) height*abs(y/height).^n;
 length=35;
 boatdeck = @(y) boathull(y)-deck(y);
 watertop = @(y) boathull(y) - watersurface(y);
@@ -22,27 +23,30 @@ elseif theta < 90
 %         end
 % else-
     if deckhitwater < poswater
-        'case 1'
-            res = length * (integral2(funwater,negwater, deckhitwater, boathull, watersurface) + integral2(funwater, deckhitwater, posboatdeck, boathull, deck));
+        'case 1';
+            res = length * (integral(@(y) watersurface(y)-boathull(y),negwater, deckhitwater) + integral(@(y) deck(y)-boathull(y), deckhitwater, posboatdeck));
             %subarea = 50;
     else    
-        'case 2'
-            res = length * integral2(funwater,negwater,poswater,boathull,watersurface);
+        'case 2';
+            res = length * integral(@(y) watersurface(y)-boathull(y),negwater,poswater);
             %subarea = 10;
     end
 else
-    if isnan(deckhitwater)==1
-        if d < 0
-            res = -1000;
-        else
-            res = 1000;
-        end
-    elseif deckhitwater > negwater & deckhitwater < poswater
-            res = length*(integral2(funwater,deckhitwater,poswater,watersurface,deck) + integral2(funwater,poswater,posboatdeck,boathull,deck));
-    elseif deckhitwater > negwater & deckhitwater > poswater
+%     if isnan(deckhitwater)==1
+%         if d < 0
+%             res = -1000;
+%         else
+%             res = 1000;
+%         end
+% else
+    if deckhitwater > negwater && deckhitwater < poswater
+        'case 1'
+            res = length*(integral(@(y) deck(y)-watersurface(y),deckhitwater,poswater) + integral(@(y) deck(y)-boathull(y),poswater,posboatdeck));
+    elseif deckhitwater > negwater && deckhitwater > poswater
             res = 0; 
     else
-            res = length*(integral2(funwater,negboatdeck,negwater,boathull,deck) + integral2(funwater,negwater,poswater,watersurface,deck)+ integral2(funwater,poswater,posboatdeck,boathull,deck));
+        'case 2'
+            res = length*(integral(@(y) deck(y)-boathull(y),negboatdeck,negwater) + integral(@(y) deck(y)-watersurface(y),negwater,poswater)+ integral(@(y) deck(y)-boathull(y),poswater,posboatdeck));
     end
 end 
 end

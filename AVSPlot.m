@@ -9,20 +9,20 @@ function res = AVSPlot()
     hold on;
     iguessd = 3;
     
-%     for theta = 1:1:89
-% %         subplot(4,3,k);
-% %         theta = k*17 + 5;
-%         COMpt = COM(n);
-%         water = waterline2(theta, n, iguessd);
-%         COBpt = COB(theta, n, water(1));
-%         iguessd = water(1);
-% 
-%         %keyboard;
-%         %BoatCode(n,theta, COMpt, water, COBpt);
-%         RA = rightingarm(COMpt, COBpt, theta);
-%         %myfunction(theta, n, water, COMpt, COBpt);
-%         plot(theta, RA, 'r*');
-%     end 
+    for theta = 1:1:89
+%         subplot(4,3,k);
+%         theta = k*17 + 5;
+        COMpt = COM(n);
+        water = waterline2(theta, n, iguessd);
+        COBpt = COB(theta, n, water(1));
+        iguessd = water(1);
+
+        %keyboard;
+        %BoatCode(n,theta, COMpt, water, COBpt);
+        RA = rightingarm(COMpt, COBpt, theta);
+        %myfunction(theta, n, water, COMpt, COBpt);
+        plot(theta, RA, 'r*');
+    end 
     iguessd = -100;
 
     for theta = 91:1:179

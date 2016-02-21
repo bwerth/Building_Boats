@@ -3,7 +3,7 @@ function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(t
 
 
 
-    boathull = @(y) abs(y).^n;
+    boathull = @(y) 17*abs(y/17).^n;
     deck = @(y) 17;
     length=30;
     boatdeck = @(y) boathull(y)-deck(y);
@@ -15,8 +15,8 @@ function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(t
     
     watersurface =@(y) (17 - d) + tand(theta)*y;
     watertop = @(y) boathull(y) - watersurface(y);
-    negwater = fzero(watertop, -10);
-    poswater = fzero(watertop, 10);
+    negwater = fzero(watertop, -50);
+    poswater = fzero(watertop, 50);
     
      %calculates the intersection of the deck with the water
 
@@ -24,27 +24,27 @@ function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(t
         deckhitwater = fzero(deckwater, 5);
         
         
-%         
-%      for y = -9:.1:9
-%          hold on;
-%          plot(y,boathull(y),'g.')
-%          plot(y, watersurface(y), 'b.')
-%          plot(y, deck(y), 'g.')
-%          plot(negboatdeck, 17 ,  'rx')
-%          plot(posboatdeck, 17, 'r*')
-%          plot(negwater, boathull(negwater),'b*')
-%          plot(poswater, boathull(poswater), 'bx')
-%          plot(deckhitwater, 17, 'ko')
-%          plot(COM(1), COM(2), 'c*');
-%          plot([negwater, poswater], [boathull(negwater), boathull(poswater)],'m');
-%          plot(COB(1), COB(2),'k*');
-%          %plot([0,0],[0,300]);
-%          axis([-20 20 -10 30]);
-%          %axis image
-%          
-%          
-%      end
-    % keyboard;    
+        
+     for y = -9:.1:9
+         hold on;
+         plot(y,boathull(y),'g.')
+         plot(y, watersurface(y), 'b.')
+         plot(y, deck(y), 'g.')
+         plot(negboatdeck, 17 ,  'rx')
+         plot(posboatdeck, 17, 'r*')
+         plot(negwater, boathull(negwater),'b+')
+         plot(poswater, boathull(poswater), 'b+')
+         plot(deckhitwater, 17, 'ko')
+         plot(COM(1), COM(2), 'c*');
+         plot([negwater, poswater], [boathull(negwater), boathull(poswater)],'m');
+         plot(COB(1), COB(2),'k*');
+         %plot([0,0],[0,300]);
+         axis([-20 20 -10 30]);
+         %axis image
+         
+         
+     end
+%     % keyboard;    
          
         
 end
