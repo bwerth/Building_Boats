@@ -1,6 +1,7 @@
 function COB = COB(theta, n, d)
 p = 1.0; %g/cm^3
-length = 30;
+length = 35;
+height = 10;
 
 
 %Density stuff
@@ -10,7 +11,7 @@ funz = @(y,z) p*z.*(z./z);
 
 %Boat equations
 boathull = @(y) 12.5* (abs(y)/4.5).^n;
-deck = @(y) 17 *y./y;
+deck = @(y) height*y./y;
 boatdeck = @(y) boathull(y)-deck(y);
 negboatdeck = fzero(boatdeck,-5);
 posboatdeck = fzero(boatdeck,5);
@@ -19,14 +20,14 @@ posboatdeck = fzero(boatdeck,5);
 watersurface = @(y) 17-d + tand(theta)*y;
 
 
-  x = sym('x');
+    x = sym('x');
     boathullprox = x^n;
-    watersurfaceprox = 17-d + tand(theta)*x;
+    watersurfaceprox = height-d + tand(theta)*x;
     func = boathullprox - watersurfaceprox;
     p = sym2poly(func);
     roots_p = roots(double(p));
     roots_p = roots_p(imag(roots_p)==0);
-
+  
     
 
     negwater = min(roots_p);

@@ -1,33 +1,48 @@
 function res = displacement(theta,d,n)
 funwater = @(y,z) 1*z./z;
+height = 17;
 
-deck = @(y) 17;
+deck = @(y)17*y./y;
 watersurface = @(y) (17-d) + tand(theta)*y;
 boathull = @(y)1/(n^n)* abs(y).^n;
 length=35;
 boatdeck = @(y) boathull(y)-deck(y);
-negboatdeck = fzero(boatdeck,-5);
-posboatdeck = fzero(boatdeck,5);
 watertop = @(y) boathull(y) - watersurface(y);
-negwater = fzero(watertop, -5);
-poswater = fzero(watertop, 5);
 deckwater = @(y) watersurface(y) - deck(y);
-deckhitwater = fzero(deckwater, 5);
+[negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
 if theta == 0
     res = length*integral2(funwater,negwater,poswater,boathull,watersurface);
 elseif theta < 90
         %checking for two cases when below 90
+%     if isnan(deckhitwater)==1
+%         if d < 0
+%             res = -1000;
+%         else
+%             res = 1000;
+%         end
+% else-
     if deckhitwater < poswater
+        'case 1'
             res = length * (integral2(funwater,negwater, deckhitwater, boathull, watersurface) + integral2(funwater, deckhitwater, posboatdeck, boathull, deck));
             %subarea = 50;
     else    
+        'case 2'
             res = length * integral2(funwater,negwater,poswater,boathull,watersurface);
             %subarea = 10;
     end
-else       
-    if deckhitwater > negwater
+else
+    if isnan(deckhitwater)==1
+        if d < 0
+            res = -1000;
+        else
+            res = 1000;
+        end
+    elseif deckhitwater > negwater & deckhitwater < poswater
             res = length*(integral2(funwater,deckhitwater,poswater,watersurface,deck) + integral2(funwater,poswater,posboatdeck,boathull,deck));
+    elseif deckhitwater > negwater & deckhitwater > poswater
+            res = 0; 
     else
             res = length*(integral2(funwater,negboatdeck,negwater,boathull,deck) + integral2(funwater,negwater,poswater,watersurface,deck)+ integral2(funwater,poswater,posboatdeck,boathull,deck));
     end
 end 
+end

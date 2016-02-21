@@ -1,4 +1,4 @@
-function res = myfunction(theta, n, d , COM, COB)  
+function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta, n, d , COM, COB)  
 
 
 
@@ -24,31 +24,27 @@ function res = myfunction(theta, n, d , COM, COB)
         deckhitwater = fzero(deckwater, 5);
         
         
-        
-     for y = -9:.1:9
-         hold on;
-         plot(y,boathull(y),'g*')
-         plot(y, watersurface(y), 'b*')
-         plot(y, deck(y), 'g*')
-         plot(negboatdeck, 17 ,  'rx')
-         plot(posboatdeck, 17, 'r*')
-         plot(negwater, boathull(negwater),'b*')
-         plot(poswater, boathull(poswater), 'bx')
-         plot(deckhitwater, 17, 'ko')
-         plot(COM(1), COM(2), 'c*');
-         plot([negwater, poswater], [boathull(negwater), boathull(poswater)],'m');
-         plot(COB(1), COB(2),'k*');
-         %plot([0,0],[0,300]);
-         axis([-20 20 -10 30]);
-         %axis image
-         
-         
-     end
+%         
+%      for y = -9:.1:9
+%          hold on;
+%          plot(y,boathull(y),'g.')
+%          plot(y, watersurface(y), 'b.')
+%          plot(y, deck(y), 'g.')
+%          plot(negboatdeck, 17 ,  'rx')
+%          plot(posboatdeck, 17, 'r*')
+%          plot(negwater, boathull(negwater),'b*')
+%          plot(poswater, boathull(poswater), 'bx')
+%          plot(deckhitwater, 17, 'ko')
+%          plot(COM(1), COM(2), 'c*');
+%          plot([negwater, poswater], [boathull(negwater), boathull(poswater)],'m');
+%          plot(COB(1), COB(2),'k*');
+%          %plot([0,0],[0,300]);
+%          axis([-20 20 -10 30]);
+%          %axis image
+%          
+%          
+%      end
     % keyboard;    
          
         
 end
-
-
-
-        

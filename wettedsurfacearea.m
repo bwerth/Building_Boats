@@ -1,8 +1,9 @@
 function res = wettedsurfacearea(theta,d,n)
 funwater = @(y,z) 1*z./z;
+height = 10;
 
-deck = @(y) 17*y./y;
-watersurface = @(y) (17-d) + tand(theta)*y;
+deck = @(y) height*y./y;
+watersurface = @(y) (height-d) + tand(theta)*y;
 boathull = @(y)1/(n^n)* abs(y).^n;
 dboathull = @(y) sqrt(1+(n*y.^(n-1)).^2);
 length=35;

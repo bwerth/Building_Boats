@@ -57,7 +57,6 @@ function res = rightingarm(COM, COB, angle)
          %pause
          
          
-         
     end 
     
 
