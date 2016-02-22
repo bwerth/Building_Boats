@@ -1,22 +1,15 @@
 function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta, n, d , COM, COB)  
-
-
-
-
+    %calculates the intersection of the boathull and the deck
     boathull = @(y) 17*abs(y/17).^n;
     deck = @(y) 17;
-    length=30;
     boatdeck = @(y) boathull(y)-deck(y);
     negboatdeck = fzero(boatdeck,-5);
     posboatdeck = fzero(boatdeck,5);
-    
-    
     %calculates the intersection of boathull and water
-    
-     watersurface =@(y) (17 - d) + tand(theta)*y;
-     watertop = @(y) boathull(y) - watersurface(y);
-     negwater = fzero(watertop,-20);
-     poswater = fzero(watertop,20);
+    watersurface =@(y) (17 - d) + tand(theta)*y;
+    watertop = @(y) boathull(y) - watersurface(y);
+    negwater = fzero(watertop,-50);
+    poswater = fzero(watertop,50);
 %      if isnan(negwater) == 1
 %          return
 %      end
@@ -26,10 +19,8 @@ function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(t
 %             res = 1000;
 %         end
      %calculates the intersection of the deck with the water
-
-        deckwater = @(y) watersurface(y) - deck(y);
-        deckhitwater = fzero(deckwater, 5);
-        
+     deckwater = @(y) watersurface(y) - deck(y);
+     deckhitwater = fzero(deckwater, 5);   
 %     x = sym('x');
 %     boathullprox = x^n;
 %     watersurfaceprox = 17-d + tand(theta)*x;
@@ -45,9 +36,6 @@ function [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(t
 % 
 %     negwater = min(roots_p)
 %     poswater = max(roots_p);
-        
-        
-        
 %      for y = -9:.1:9
 %          hold on;
 %          plot(y,boathull(y),'g.')

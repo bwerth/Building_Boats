@@ -9,7 +9,6 @@ y(3) = poswater;
 
 function res = submerged(d)
     y=0;
-    d
 %     funboat = @(y,z) .0317*z./z; %g/cm^3
 %     funwater = @(y,z) 1.0*z./z;
     
@@ -42,19 +41,13 @@ function res = submerged(d)
 %     poswater = max(roots_p);
     
     [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
-    
-    global totalweight
     %Calculates weight of boat
     totalweight = length*.0317*integral(@(y) deck(y)-boathull(y),negboatdeck,posboatdeck)+1120;
 
     submass = displacement(theta,d,n);
     
-    if submass == -1000
-        res = -1000;
-        'Ho'
-    elseif submass == 1000
-        res = 1000;
-        'Hey'
+    if submass == -1000 || submass == 1000
+        res = submass;
     else
         res = totalweight-submass;
     end

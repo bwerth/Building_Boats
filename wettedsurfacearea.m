@@ -1,24 +1,17 @@
 function res = wettedsurfacearea(theta,d,n)
 funwater = @(y,z) 1*z./z;
-height = 10;
+height = 17;
 
 deck = @(y) height*y./y;
 watersurface = @(y) (height-d) + tand(theta)*y;
-boathull = @(y)1/(n^n)* abs(y).^n;
-dboathull = @(y) sqrt(1+(n*y.^(n-1)).^2);
+boathull = @(y) height*abs(y/height).^n;
+dboathull = @(y) height*n*(y/height).^(n-1);
 length=35;
-boatdeck = @(y) boathull(y)-deck(y);
-negboatdeck = fzero(boatdeck,-5);
-posboatdeck = fzero(boatdeck,5);
-watertop = @(y) boathull(y) - watersurface(y);
-negwater = fzero(watertop, -5);
-poswater = fzero(watertop, 5);
-deckwater = @(y) watersurface(y) - deck(y);
-deckhitwater = fzero(deckwater, 5);
+[negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
 if theta == 0
-        curve = length*integral(dboathull,negwater,poswater);
-        crosssection = 2*integral2(funwater,negwater,poswater,boathull,watersurface);
-        res = curve+crosssection;
+    curve = length*integral(dboathull,negwater,poswater);
+    crosssection = 2*integral2(funwater,negwater,poswater,boathull,watersurface);
+    res = curve+crosssection;
 elseif theta < 90
         %checking for two cases when below 90
     if deckhitwater < poswater

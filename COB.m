@@ -33,7 +33,7 @@ watersurface = @(y) height-d + tand(theta)*y;
 %     negwater = min(roots_p);
 %     poswater = max(roots_p);
     
-[negboatdeck,posboatdeck,negwater,poswater,~] = myfunction(theta,n,d,[0 0],[0 0]);
+[negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
 
 
 %Conditionals based on angle
@@ -46,8 +46,6 @@ if theta == 0
 elseif theta < 90
 
     %calculates the intersection of the deck with the water
-    deckwater = @(y) watersurface(y) - deck(y);
-    deckhitwater = fzero(deckwater, 5);
 
     %checking for two cases when below 90
 
@@ -68,14 +66,9 @@ else
 
     %calculates the intersection of the deck with the water
 
-    deckwater = @(y) watersurface(y) - deck(y);
-    deckhitwater = fzero(deckwater, 5);
-
-
     %checking for two cases when over 90    
 
-
-    if deckhitwater > negwater
+    if deckhitwater > negwater && deckhitwater < poswater
         totalmass = length*(integral2(fun,deckhitwater,poswater,watersurface,deck) + integral2(fun,poswater,posboatdeck,boathull,deck));
         My = length*(integral2(funy,deckhitwater,poswater,watersurface,deck) + integral2(funy,poswater,posboatdeck,boathull,deck));
         Mz = length*(integral2(funz,deckhitwater,poswater,watersurface,deck) + integral2(funz,poswater,posboatdeck,boathull,deck));
