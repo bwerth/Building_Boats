@@ -18,7 +18,7 @@ function res = AVSPlot()
         RA = rightingarm(COMpt, COBpt, theta);
         plot(theta, RA, 'r*');
     end 
-    iguessd = -10;
+    iguessd = 10;
     for theta = 91:10:179
 %         subplot(4,3,k);
 %         theta = k*17 + 5;

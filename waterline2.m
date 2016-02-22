@@ -40,7 +40,7 @@ function res = submerged(d)
 %     negwater = min(roots_p);
 %     poswater = max(roots_p);
     
-    [negboatdeck,posboatdeck,negwater,poswater,~] = myfunction(theta,n,d,[0 0],[0 0]);
+    [negboatdeck,posboatdeck,negwater,poswater,~] = myfunction(theta,n,d);
     %Calculates weight of boat
     totalweight = length*.0317*integral(@(y) deck(y)-boathull(y),negboatdeck,posboatdeck)+1120;
     area = integral(@(y) deck(y) - boathull(y),negboatdeck,posboatdeck);

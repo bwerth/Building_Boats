@@ -5,7 +5,7 @@ watersurface = @(y) (17-d) + tand(theta)*y;
 boathull = @(y) height*abs(y/height).^n;
 funwater = @(y,z) y./y;
 length=35;
-[negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
+[negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d);
     if isnan(negwater)==1
         res = 0;
     elseif theta == 0
