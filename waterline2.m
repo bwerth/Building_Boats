@@ -1,6 +1,6 @@
 function y = waterline2(theta,n, estimate)
 height = 17;
-
+theta
 %y = submerged(10);
 y = 1:3;
 y(1) = fzero(@submerged,estimate); 
@@ -40,11 +40,13 @@ function res = submerged(d)
 %     negwater = min(roots_p);
 %     poswater = max(roots_p);
     
-    [negboatdeck,posboatdeck,negwater,poswater,deckhitwater] = myfunction(theta,n,d,[0 0],[0 0]);
+    [negboatdeck,posboatdeck,negwater,poswater,~] = myfunction(theta,n,d,[0 0],[0 0]);
     %Calculates weight of boat
     totalweight = length*.0317*integral(@(y) deck(y)-boathull(y),negboatdeck,posboatdeck)+1120;
-
-    submass = displacement(theta,d,n);
+    area = integral(@(y) deck(y) - boathull(y),negboatdeck,posboatdeck);
+    volume = length*area;
+    %Calculates the mass of the displaced water
+    submass = displacement(theta,n,d);
     
     if submass == -1000 || submass == 1000
         res = submass;
@@ -54,6 +56,7 @@ function res = submerged(d)
         
         %Checking for the angles
 
+        res = 0.5 - submass./area;
         
         
      
